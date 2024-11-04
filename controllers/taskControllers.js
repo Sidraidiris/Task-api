@@ -123,4 +123,12 @@ exports.deleteTask = (req, res) => {
             message: 'Task not found'
         }))
         return;
-    }}
+    }
+
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    writeTasksToFile(updatedTasks);
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({
+        message: 'Task successfully deleted'
+    }));
+}
